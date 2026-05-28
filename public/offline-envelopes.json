@@ -1,0 +1,361 @@
+{
+  "flights_search": [
+    {
+      "version": "v0.9",
+      "createSurface": {
+        "surfaceId": "flight-search-results",
+        "catalogId": "copilotkit://app-dashboard-catalog"
+      }
+    },
+    {
+      "version": "v0.9",
+      "updateComponents": {
+        "surfaceId": "flight-search-results",
+        "components": [
+          {
+            "id": "root",
+            "component": "Row",
+            "children": {
+              "componentId": "flight-card",
+              "path": "/flights"
+            },
+            "gap": 16
+          },
+          {
+            "id": "flight-card",
+            "component": "FlightCard",
+            "airline": {
+              "path": "airline"
+            },
+            "airlineLogo": {
+              "path": "airlineLogo"
+            },
+            "flightNumber": {
+              "path": "flightNumber"
+            },
+            "origin": {
+              "path": "origin"
+            },
+            "destination": {
+              "path": "destination"
+            },
+            "date": {
+              "path": "date"
+            },
+            "departureTime": {
+              "path": "departureTime"
+            },
+            "arrivalTime": {
+              "path": "arrivalTime"
+            },
+            "duration": {
+              "path": "duration"
+            },
+            "status": {
+              "path": "status"
+            },
+            "price": {
+              "path": "price"
+            },
+            "action": {
+              "event": {
+                "name": "book_flight",
+                "context": {
+                  "flightNumber": {
+                    "path": "flightNumber"
+                  },
+                  "origin": {
+                    "path": "origin"
+                  },
+                  "destination": {
+                    "path": "destination"
+                  },
+                  "price": {
+                    "path": "price"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "version": "v0.9",
+      "updateDataModel": {
+        "surfaceId": "flight-search-results",
+        "path": "/",
+        "value": {
+          "flights": [
+            {
+              "id": "1",
+              "airline": "United Airlines",
+              "airlineLogo": "https://www.google.com/s2/favicons?domain=united.com&sz=128",
+              "flightNumber": "UA543",
+              "origin": "SFO",
+              "destination": "JFK",
+              "date": "Tue, Mar 18",
+              "departureTime": "08:00 AM",
+              "arrivalTime": "04:30 PM",
+              "duration": "5h 30m",
+              "status": "On Time",
+              "statusIcon": "https://placehold.co/12/22c55e/22c55e.png",
+              "price": "$289"
+            },
+            {
+              "id": "2",
+              "airline": "Delta Airlines",
+              "airlineLogo": "https://www.google.com/s2/favicons?domain=delta.com&sz=128",
+              "flightNumber": "DL190",
+              "origin": "SFO",
+              "destination": "JFK",
+              "date": "Tue, Mar 18",
+              "departureTime": "09:15 AM",
+              "arrivalTime": "05:45 PM",
+              "duration": "5h 30m",
+              "status": "On Time",
+              "statusIcon": "https://placehold.co/12/22c55e/22c55e.png",
+              "price": "$320"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "dashboard_revenue": [
+    {
+      "version": "v0.9",
+      "createSurface": {
+        "surfaceId": "sales_dashboard",
+        "catalogId": "copilotkit://app-dashboard-catalog"
+      }
+    },
+    {
+      "version": "v0.9",
+      "updateComponents": {
+        "surfaceId": "sales_dashboard",
+        "components": [
+          {
+            "children": "title,revenue_chart",
+            "type": "Column",
+            "id": "root"
+          },
+          {
+            "id": "title",
+            "type": "Text",
+            "text": "Sales Dashboard - Revenue by Category",
+            "style": "{\"paddingBottom\": \"16px\"}",
+            "variant": "headlineSmall"
+          },
+          {
+            "data": "[{\"category\": \"Electronics\", \"revenue\": 120000}, {\"category\": \"Apparel\", \"revenue\": 85000}, {\"category\": \"Home Goods\", \"revenue\": 60000}, {\"category\": \"Books\", \"revenue\": 30000}, {\"category\": \"Toys\", \"revenue\": 45000}]",
+            "options": "{\"title\": \"Revenue by Category\", \"x_axis_field\": \"category\", \"y_axis_field\": \"revenue\", \"x_axis_label\": \"Category\", \"y_axis_label\": \"Revenue ($\")\"}",
+            "chartType": "BAR",
+            "id": "revenue_chart",
+            "type": "Chart"
+          }
+        ]
+      }
+    }
+  ],
+  "shopping_search": [
+    {
+      "version": "v0.9",
+      "createSurface": {
+        "surfaceId": "product-search-results",
+        "catalogId": "https://a2ui.org/specification/v0_9/basic_catalog.json"
+      }
+    },
+    {
+      "version": "v0.9",
+      "updateComponents": {
+        "surfaceId": "product-search-results",
+        "components": [
+          {
+            "id": "root",
+            "component": "List",
+            "direction": "horizontal",
+            "gap": 16,
+            "children": {
+              "componentId": "product-card",
+              "path": "/products"
+            }
+          },
+          {
+            "id": "product-card",
+            "component": "Card",
+            "children": [
+              "product-card-col"
+            ]
+          },
+          {
+            "id": "product-card-col",
+            "component": "Column",
+            "gap": 12,
+            "children": [
+              "product-card-image",
+              "product-card-name",
+              "product-card-price",
+              "product-card-meta",
+              "product-card-button"
+            ]
+          },
+          {
+            "id": "product-card-image",
+            "component": "Image",
+            "variant": "smallFeature",
+            "src": {
+              "path": "imageUrl"
+            },
+            "alt": {
+              "path": "name"
+            }
+          },
+          {
+            "id": "product-card-name",
+            "component": "Text",
+            "variant": "h3",
+            "text": {
+              "path": "name"
+            }
+          },
+          {
+            "id": "product-card-price",
+            "component": "Text",
+            "variant": "h2",
+            "text": {
+              "path": "price"
+            }
+          },
+          {
+            "id": "product-card-meta",
+            "component": "Row",
+            "justify": "spaceBetween",
+            "children": [
+              "product-card-rating",
+              "product-card-category"
+            ]
+          },
+          {
+            "id": "product-card-rating",
+            "component": "Text",
+            "variant": "caption",
+            "text": {
+              "path": "rating"
+            }
+          },
+          {
+            "id": "product-card-category",
+            "component": "Text",
+            "variant": "caption",
+            "text": {
+              "path": "category"
+            }
+          },
+          {
+            "id": "product-card-button",
+            "component": "Button",
+            "variant": "primary",
+            "children": [
+              "product-card-button-text"
+            ],
+            "action": {
+              "event": {
+                "name": "add_to_cart",
+                "context": {
+                  "productId": {
+                    "path": "id"
+                  },
+                  "name": {
+                    "path": "name"
+                  },
+                  "price": {
+                    "path": "price"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "product-card-button-text",
+            "component": "Text",
+            "text": "Add to cart"
+          }
+        ]
+      }
+    },
+    {
+      "version": "v0.9",
+      "updateDataModel": {
+        "surfaceId": "product-search-results",
+        "path": "/",
+        "value": {
+          "products": [
+            {
+              "id": "sneaker-001",
+              "name": "Nimbus Stride 8",
+              "price": "$129",
+              "rating": "4.7 stars",
+              "category": "Running",
+              "imageUrl": "https://placehold.co/256x256/4f46e5/ffffff?text=Nimbus"
+            },
+            {
+              "id": "sneaker-004",
+              "name": "Glide Cushion 4",
+              "price": "$109",
+              "rating": "4.4 stars",
+              "category": "Running",
+              "imageUrl": "https://placehold.co/256x256/2563eb/ffffff?text=Glide"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "shopping_dashboard": [
+    {
+      "version": "v0.9",
+      "createSurface": {
+        "surfaceId": "sales_by_category_march_dashboard",
+        "catalogId": "copilotkit://app-dashboard-catalog"
+      }
+    },
+    {
+      "version": "v0.9",
+      "updateComponents": {
+        "surfaceId": "sales_by_category_march_dashboard",
+        "components": [
+          {
+            "label": "March Sales Dashboard",
+            "style": "dashboard",
+            "children": "Category Sales - March 2026",
+            "id": "root",
+            "type": "Container"
+          },
+          {
+            "xAxis": "category",
+            "barOrientation": "vertical",
+            "title": "Sales by Category for March 2026",
+            "style": "chart",
+            "yAxis": "sales",
+            "dataPointer": "/categorySales",
+            "stackBars": false,
+            "type": "BarChart",
+            "layout": "vertical",
+            "id": "march_sales_chart"
+          }
+        ]
+      }
+    },
+    {
+      "version": "v0.9",
+      "updateDataModel": {
+        "surfaceId": "sales_by_category_march_dashboard",
+        "path": "/",
+        "value": {
+          "categorySales": "[{\"category\": \"Running\", \"sales\": 11610}, {\"category\": \"Trail\", \"sales\": 6556}, {\"category\": \"Lifestyle\", \"sales\": 5785}, {\"category\": \"Outerwear\", \"sales\": 10250}, {\"category\": \"Bags\", \"sales\": 5556}, {\"category\": \"Watches\", \"sales\": 9618}, {\"category\": \"Racing\", \"sales\": 6265}]"
+        }
+      }
+    }
+  ]
+}
