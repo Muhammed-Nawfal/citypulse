@@ -150,6 +150,17 @@ add_langgraph_fastapi_endpoint(
 )
 
 
+@app.get("/health")
+async def health():
+    from src.services.redis_service import RedisService
+    redis_ok = await RedisService().health_check()
+    return {
+        "status": "ok",
+        "redis": "connected" if redis_ok else "disconnected",
+        "version": "1.0.0",
+    }
+
+
 @app.get("/")
 def root():
     agents = {
