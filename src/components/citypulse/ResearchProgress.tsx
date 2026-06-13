@@ -10,40 +10,41 @@ export default function ResearchProgress() {
 
   const scored = Object.values(zones).filter(z => z.visible).length
   const isResearching = status === "researching" || status === "scoring"
+  const lastLog = research_log[research_log.length - 1]
 
   if (!city) return null
 
   return (
-    <div className="p-4 border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-      <div className="flex items-center gap-2 mb-2">
+    <div
+      className="px-3 py-2 border-b flex-shrink-0"
+      style={{ borderColor: "rgba(255,255,255,0.08)" }}
+    >
+      <div className="flex items-center gap-2">
         {isResearching && (
-          <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse flex-shrink-0" />
+          <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse flex-shrink-0" />
         )}
-        <span className="text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
-          {isResearching
-            ? `Researching ${city} — ${scenario}`
-            : `${city} — ${scenario}`}
+        <span className="text-xs truncate flex-1" style={{ color: "rgba(255,255,255,0.55)" }}>
+          {isResearching ? `Researching ${city}` : `${city} — ${scenario}`}
+        </span>
+        <span className="text-xs flex-shrink-0" style={{ color: "rgba(255,255,255,0.3)" }}>
+          {scored}/9
         </span>
       </div>
 
-      <div className="w-full rounded-full h-1 mb-1" style={{ background: "rgba(255,255,255,0.1)" }}>
+      <div className="w-full rounded-full h-0.5 mt-1.5" style={{ background: "rgba(255,255,255,0.08)" }}>
         <div
-          className="h-1 rounded-full transition-all duration-500"
+          className="h-0.5 rounded-full transition-all duration-500"
           style={{ width: `${(scored / 9) * 100}%`, background: "#60a5fa" }}
         />
       </div>
-      <p className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
-        {scored}/9 zones analysed
-      </p>
 
-      {research_log.length > 0 && (
-        <div className="mt-2 space-y-0.5">
-          {research_log.slice(-3).map((line, i) => (
-            <p key={i} className="text-xs truncate" style={{ color: "rgba(255,255,255,0.3)" }}>
-              {line}
-            </p>
-          ))}
-        </div>
+      {isResearching && lastLog && (
+        <p
+          className="truncate mt-1"
+          style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.65rem" }}
+        >
+          {lastLog}
+        </p>
       )}
     </div>
   )

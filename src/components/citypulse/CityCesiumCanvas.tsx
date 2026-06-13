@@ -56,8 +56,12 @@ export default function CityCesiumCanvas() {
 
       if (cancelled || !containerRef.current) return
 
+      // Trim guards against accidental leading/trailing whitespace in the env var
       Cesium.Ion.defaultAccessToken =
-        process.env.NEXT_PUBLIC_CESIUM_ION_TOKEN ?? ""
+        (process.env.NEXT_PUBLIC_CESIUM_ION_TOKEN ?? "").trim()
+
+      // Load world terrain first so Ion imagery and 3D tiles have a surface to land on
+      const terrain = await Cesium.CesiumTerrainProvider.fromIonAssetId(1)
 
       const viewer = new Cesium.Viewer(containerRef.current, {
         animation: false,
@@ -70,6 +74,7 @@ export default function CityCesiumCanvas() {
         fullscreenButton: false,
         selectionIndicator: false,
         infoBox: false,
+        terrainProvider: terrain,
       })
 
       viewerRef.current = viewer
