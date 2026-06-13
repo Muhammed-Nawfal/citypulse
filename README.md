@@ -12,7 +12,7 @@
 [![Gemini](https://img.shields.io/badge/Gemini-3.5%20Flash-f9ab00)](https://aistudio.google.com)
 [![Redis](https://img.shields.io/badge/Redis-Shared%20Memory-d82c20)](https://redis.io)
 
-🎥 **[Demo video](#)** · 🐦 **[Launch post](#)** · 🔗 **[Live demo](#)** · 🏛️ London A2A & A2UI Hackathon · Track 2: Generative UI
+
 
 </div>
 
