@@ -17,3 +17,9 @@ dependencies = [
   "ag-ui-a2ui-toolkit>=0.0.3",
   "hiredis>=3.4.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.4.0",
+]
