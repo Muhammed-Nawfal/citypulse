@@ -1,0 +1,7 @@
+.citypulse-root {
+  --cp-bg: #0a0a1a;
+  --cp-surface: #0f0f2a;
+  --cp-border: rgba(255,255,255,0.08);
+  --cp-text: rgba(255,255,255,0.9);
+  --cp-text-muted: rgba(255,255,255,0.4);
+}
