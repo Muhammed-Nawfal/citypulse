@@ -13,7 +13,6 @@
 [![Redis](https://img.shields.io/badge/Redis-Shared%20Memory-d82c20)](https://redis.io)
 
 
-
 </div>
 
 ---
