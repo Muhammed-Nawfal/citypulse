@@ -35,6 +35,7 @@ _install_doc_inlining()
 
 from src.dynamic_agent import graph as dynamic_graph  # noqa: E402
 from src.fixed_agent import graph as fixed_graph  # noqa: E402
+from src.graph import build_graph as build_citypulse_graph  # noqa: E402
 
 app = FastAPI(title="A2UI Demo Agents")
 
@@ -134,11 +135,27 @@ except Exception as exc:  # noqa: BLE001 — never let /legal break /fixed + /dy
     )
 
 
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# CityPulse agent — added by Person B.
+# Infrastructure risk intelligence LangGraph agent (src/graph.py).
+add_langgraph_fastapi_endpoint(
+    app=app,
+    agent=LangGraphAGUIAgent(
+        name="citypulse_agent",
+        description="Infrastructure risk intelligence agent",
+        graph=build_citypulse_graph(),
+        config=_AGENT_CONFIG,
+    ),
+    path="/citypulse",
+)
+
+
 @app.get("/")
 def root():
     agents = {
         "fixed_agent": "/fixed/",
         "dynamic_agent": "/dynamic/",
+        "citypulse_agent": "/citypulse/",
     }
     if _legal_registered:
         agents["legal_agent"] = "/legal/"

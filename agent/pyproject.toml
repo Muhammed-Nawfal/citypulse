@@ -14,4 +14,6 @@ dependencies = [
   "uvicorn>=0.48.0",
   "linkup-sdk>=0.2.0",
   "redis>=5.2.0",
+  "ag-ui-a2ui-toolkit>=0.0.3",
+  "hiredis>=3.4.0",
 ]
