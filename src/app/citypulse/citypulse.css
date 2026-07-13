@@ -5,3 +5,87 @@
   --cp-text: rgba(255,255,255,0.9);
   --cp-text-muted: rgba(255,255,255,0.4);
 }
+
+/* ── CopilotKit dark overrides ── */
+
+/* Kill notification popup */
+.copilotKitDevConsole {
+  display: none !important;
+}
+
+/* Remove duplicate CopilotKit header */
+.copilotKitHeader {
+  display: none !important;
+}
+
+/* Remove "Powered by CopilotKit" footer */
+.copilotKitMessagesFooter {
+  display: none !important;
+}
+
+/* Full height chain: chat → body → messages */
+.copilotKitChat,
+.copilotKitWindow {
+  background: #0d0d1f !important;
+  color: rgba(255,255,255,0.88) !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.copilotKitChatBody {
+  flex: 1 !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  background: #0d0d1f !important;
+}
+
+.copilotKitMessages {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  background: #0d0d1f !important;
+}
+
+/* User messages — blue tint */
+.copilotKitUserMessage {
+  background: rgba(59,130,246,0.15) !important;
+  color: rgba(255,255,255,0.9) !important;
+  border: 1px solid rgba(59,130,246,0.2) !important;
+}
+
+/* Assistant messages — subtle surface */
+.copilotKitAssistantMessage {
+  background: rgba(255,255,255,0.04) !important;
+  color: rgba(255,255,255,0.85) !important;
+}
+
+/* Input area */
+.copilotKitInput,
+.copilotKitInputContainer {
+  background: rgba(255,255,255,0.04) !important;
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
+  flex-shrink: 0 !important;
+}
+
+.copilotKitInputControls textarea,
+.copilotKitInputControls input {
+  background: transparent !important;
+  color: rgba(255,255,255,0.88) !important;
+}
+
+.copilotKitInputControls textarea::placeholder,
+.copilotKitInputControls input::placeholder {
+  color: rgba(255,255,255,0.28) !important;
+}
+
+/* Send button */
+.copilotKitButton,
+.copilotKitInputControlButton {
+  color: #3b82f6 !important;
+}

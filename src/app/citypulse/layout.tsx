@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function CityPulseLayout({ children }: { children: React.ReactNode }) {
   return (
-    <CopilotKit runtimeUrl="/api/citypulse-copilotkit" agent="citypulse_agent">
+    <CopilotKit runtimeUrl="/api/citypulse-copilotkit" agent="citypulse_agent" showDevConsole={false}>
       {children}
     </CopilotKit>
   )

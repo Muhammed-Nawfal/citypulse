@@ -14,6 +14,12 @@ export interface ZoneState extends ZoneRisk {
   visible: boolean    // true once agent has emitted this zone
 }
 
+export interface AgentMessage {
+  type: string   // LangChain message type: "human" | "ai" | ...
+  content: string
+  id: string | null
+}
+
 interface CityStore {
   city: string
   scenario: string
@@ -21,6 +27,8 @@ interface CityStore {
   research_log: string[]
   zones: Record<string, ZoneState>
   selectedZone: string | null
+  scoringSource: string  // "ai" | "fallback" | "" (unknown/not yet scored)
+  agentMessages: AgentMessage[]
   // actions
   syncFromAgent: (agentState: {
     city?: string
@@ -28,6 +36,8 @@ interface CityStore {
     status?: string
     research_log?: string[]
     zone_risks?: ZoneRisk[]
+    scoring_source?: string
+    agent_messages?: AgentMessage[]
   }) => void
   setSelectedZone: (id: string | null) => void
   reset: () => void
@@ -50,14 +60,18 @@ export const useCityStore = create<CityStore>((set, get) => ({
   research_log: [],
   zones: Object.fromEntries(ZONE_IDS.map(id => [id, emptyZone(id)])),
   selectedZone: null,
+  scoringSource: "",
+  agentMessages: [],
 
-  syncFromAgent: ({ city, scenario, status, research_log, zone_risks }) => {
+  syncFromAgent: ({ city, scenario, status, research_log, zone_risks, scoring_source, agent_messages }) => {
     set(s => {
       const next: Partial<CityStore> = {}
       if (city !== undefined) next.city = city
       if (scenario !== undefined) next.scenario = scenario
       if (status !== undefined) next.status = status
       if (research_log !== undefined) next.research_log = research_log
+      if (scoring_source !== undefined) next.scoringSource = scoring_source
+      if (agent_messages !== undefined) next.agentMessages = agent_messages
       if (zone_risks !== undefined) {
         const zones = { ...s.zones }
         for (const z of zone_risks) {
@@ -75,5 +89,7 @@ export const useCityStore = create<CityStore>((set, get) => ({
     city: "", scenario: "", status: "idle", research_log: [],
     zones: Object.fromEntries(ZONE_IDS.map(id => [id, emptyZone(id)])),
     selectedZone: null,
+    scoringSource: "",
+    agentMessages: [],
   }),
 }))

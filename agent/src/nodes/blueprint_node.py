@@ -12,7 +12,7 @@ when GEMINI_API_KEY is absent). Falls back to a city_grid blueprint on any failu
 """
 from copilotkit.langgraph import copilotkit_emit_state
 
-from src.llm import get_llm, parse_json
+from src.llm import ainvoke_timed, get_llm, parse_json
 from src.state import AgentState
 
 VALID_SCENE_TYPES = ("city_grid", "network_graph")
@@ -58,10 +58,11 @@ async def blueprint_node(state: AgentState, config) -> AgentState:
 
     blueprint = None
     try:
-        llm = get_llm(temperature=0.1)  # raises if GEMINI_API_KEY absent
-        resp = await llm.ainvoke(
+        llm = get_llm(temperature=0.1)
+        resp = await ainvoke_timed(
+            llm,
             f"{BLUEPRINT_PROMPT}\n\nQuery: {city} — {scenario}\n"
-            "Generate the scene blueprint."
+            "Generate the scene blueprint.",
         )
         data = parse_json(resp.content)
         if isinstance(data, dict) and data.get("scene_type") in VALID_SCENE_TYPES:
@@ -70,8 +71,13 @@ async def blueprint_node(state: AgentState, config) -> AgentState:
             data.setdefault("nodes", [])
             data.setdefault("connections", [])
             blueprint = data
-    except Exception:
-        blueprint = None  # → fallback below
+    except Exception as exc:
+        # Quota / auth failure — use fallback immediately, don't retry
+        import logging
+        logging.getLogger(__name__).warning(
+            "Blueprint LLM call failed (%s) — using city_grid fallback", type(exc).__name__
+        )
+        blueprint = None
 
     state["blueprint"] = blueprint if blueprint is not None else _fallback(city, scenario)
     await copilotkit_emit_state(config, state)

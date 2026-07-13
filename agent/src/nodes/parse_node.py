@@ -7,7 +7,7 @@ import uuid
 
 from copilotkit.langgraph import copilotkit_emit_state
 
-from src.llm import get_llm, parse_json
+from src.llm import ainvoke_timed, get_llm, parse_json
 from src.state import AgentState
 
 # Small known-city list — extend as needed. Lowercase contains-match.
@@ -36,6 +36,10 @@ SCENARIO_KEYWORDS = {
     "storm": "storm surge",
     "hurricane": "storm surge",
     "cyber": "cyberattack",
+    "air quality": "air quality",
+    "air pollution": "air quality",
+    "pollution": "air quality",
+    "smog": "air quality",
 }
 
 IMPACT_TRIGGERS = ("what if", "barrier", "intervention", "what would happen")
@@ -81,7 +85,7 @@ async def _gemini_fill(text: str, city: str, scenario: str) -> tuple[str, str]:
         f"Request: {text}"
     )
     try:
-        resp = await get_llm().ainvoke(prompt)
+        resp = await ainvoke_timed(get_llm(), prompt)
         data = parse_json(resp.content)
         if isinstance(data, dict):
             city = city or str(data.get("city") or "").strip()
@@ -102,7 +106,8 @@ async def parse_query_node(state: AgentState, config) -> AgentState:
     if not city or not scenario:
         city, scenario = await _gemini_fill(text, city, scenario)
 
-    state["city"] = city or prev_city
+    # Demo is London-only — always default to London if no city found
+    state["city"] = city or prev_city or "London"
     state["scenario"] = scenario or prev_scenario
 
     # Scenario switch = same city already in state, but the scenario changed.
@@ -112,6 +117,13 @@ async def parse_query_node(state: AgentState, config) -> AgentState:
     )
 
     state["impact_query"] = text if any(t in low for t in IMPACT_TRIGGERS) else None
+
+    # Fresh (non-"what if") turn: clear any impact writeup from a prior turn so
+    # emit_zones_node doesn't mistake it for this turn's result (state persists
+    # across turns via MemorySaver).
+    if not state["impact_query"]:
+        state["impact_summary"] = None
+        state["impact_sources"] = None
 
     if not state.get("session_id"):
         state["session_id"] = str(uuid.uuid4())
