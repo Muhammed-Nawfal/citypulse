@@ -5,10 +5,10 @@ import AgentSidebar from "@/components/citypulse/AgentSidebar"
 export default function CityPulsePage() {
   return (
     <main className="flex h-screen overflow-hidden" style={{ background: "#0a0a1a" }}>
-      <div className="flex-1 relative">
+      <div className="flex-1 relative overflow-hidden">
         <CityCanvas />
       </div>
-      <div className="w-[380px] border-l" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+      <div className="w-[380px] h-full flex flex-col overflow-hidden border-l" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
         <AgentSidebar />
       </div>
     </main>

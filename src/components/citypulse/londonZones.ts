@@ -27,6 +27,12 @@ function makeBox(
 const C = [-0.210, -0.147, -0.084, -0.021] // column lng boundaries
 const R = [51.470, 51.494, 51.517, 51.540] // row lat boundaries (S→N)
 
+export const ZONE_NAMES: Record<string, string> = {
+  z_0_0: "Notting Hill", z_0_1: "Camden",         z_0_2: "Hackney",
+  z_1_0: "Kensington",   z_1_1: "City of London", z_1_2: "Whitechapel",
+  z_2_0: "Battersea",    z_2_1: "Lambeth",        z_2_2: "Southwark",
+}
+
 export const LONDON_ZONES: GeoJSON.FeatureCollection<GeoJSON.Polygon, { id: string; name: string }> = {
   type: "FeatureCollection",
   features: [

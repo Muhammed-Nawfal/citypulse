@@ -1,5 +1,5 @@
 "use client"
-import { ZoneState } from "@/lib/cityStore"
+import { ZoneState, useCityStore } from "@/lib/cityStore"
 
 const LABEL_STYLES: Record<string, string> = {
   LOW: "text-green-400",
@@ -21,12 +21,19 @@ interface Props {
 }
 
 export default function ZoneDetailCard({ zoneId, zone }: Props) {
+  const setSelectedZone = useCityStore(s => s.setSelectedZone)
   const row = zoneId.split("_")[1]
   const col = zoneId.split("_")[2]
   const zoneName = `Zone ${row}-${col}`
 
   return (
-    <div className="m-3 p-4 rounded-lg border" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.1)" }}>
+    <div
+      className="m-3 p-4 rounded-lg border"
+      style={{
+        background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.1)",
+        flexShrink: 0, maxHeight: "38vh", overflowY: "auto",
+      }}
+    >
       {/* Header */}
       <div className="flex justify-between items-start mb-3">
         <div>
@@ -35,10 +42,23 @@ export default function ZoneDetailCard({ zoneId, zone }: Props) {
           </p>
           <p className="text-white font-semibold mt-0.5">Risk Assessment</p>
         </div>
-        <span className={`text-xs font-bold px-2 py-1 rounded ${LABEL_STYLES[zone.label]}`}
-          style={{ background: "rgba(255,255,255,0.06)" }}>
-          {zone.label}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className={`text-xs font-bold px-2 py-1 rounded ${LABEL_STYLES[zone.label]}`}
+            style={{ background: "rgba(255,255,255,0.06)" }}>
+            {zone.label}
+          </span>
+          <button
+            onClick={() => setSelectedZone(null)}
+            aria-label="Close zone detail"
+            style={{
+              background: "rgba(255,255,255,0.06)", border: "none", borderRadius: 6,
+              width: 22, height: 22, color: "rgba(255,255,255,0.5)", cursor: "pointer",
+              fontSize: 13, lineHeight: 1,
+            }}
+          >
+            ✕
+          </button>
+        </div>
       </div>
 
       {/* Score bar */}
