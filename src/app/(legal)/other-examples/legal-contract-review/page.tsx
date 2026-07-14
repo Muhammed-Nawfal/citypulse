@@ -33,7 +33,7 @@ export default function LegalContractReviewPage() {
           explore.
         </p>
         <div className="flex items-center justify-center gap-4 text-sm">
-          <Link href="/" className="underline hover:opacity-70">
+          <Link href="/pdf-analyst" className="underline hover:opacity-70">
             ← Back to the demo
           </Link>
           <Link href="/catalog" className="underline hover:opacity-70">

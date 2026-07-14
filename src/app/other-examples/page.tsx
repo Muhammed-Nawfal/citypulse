@@ -150,7 +150,7 @@ export default function OtherExamplesGalleryPage() {
         )}
 
         <footer className="mt-10 text-xs opacity-50">
-          <Link href="/" className="hover:underline">
+          <Link href="/pdf-analyst" className="hover:underline">
             ← Back to dashboard
           </Link>
         </footer>

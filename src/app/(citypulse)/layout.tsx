@@ -1,5 +1,5 @@
 import { CopilotKit } from "@copilotkit/react-core"
-import "@/app/citypulse/citypulse.css"
+import "@/app/(citypulse)/citypulse.css"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {

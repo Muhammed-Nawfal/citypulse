@@ -2,10 +2,12 @@
 import { useCityStore } from "@/lib/cityStore"
 
 const SCENARIOS = [
-  { label: "Flooding",    match: "flooding",           query: "Analyse London flooding risk" },
-  { label: "Power grid",  match: "power grid failure",  query: "Analyse London power grid failure risk" },
-  { label: "Transport",   match: "transport disruption",query: "Analyse London transport disruption risk" },
-  { label: "Air quality", match: "air quality",         query: "Analyse London air quality risk" },
+  { label: "Flooding",     match: "flooding",            query: "Analyse London flooding risk" },
+  { label: "Power grid",   match: "power grid failure",  query: "Analyse London power grid failure risk" },
+  { label: "Transport",    match: "transport disruption",query: "Analyse London transport disruption risk" },
+  { label: "Air quality",  match: "air quality",         query: "Analyse London air quality risk" },
+  { label: "Extreme heat", match: "extreme heat",        query: "Analyse London extreme heat risk" },
+  { label: "Storm surge",  match: "storm surge",         query: "Analyse London storm surge risk" },
 ]
 
 export default function ScenarioSwitcher({ onScenario }: { onScenario: (query: string) => void }) {
